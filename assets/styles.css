@@ -1,0 +1,262 @@
+/* General Body and Typography */
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #1a1a2e; /* Darker, slightly purplish background */
+    color: #e0e0e0; /* Softer white text */
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Header Styling */
+header {
+    background: #16213e; /* Darker header background */
+    padding: 2em 1em; /* More vertical padding */
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Stronger shadow */
+    border-bottom: 1px solid #0f3460; /* Subtle border at the bottom */
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.8em; /* Larger title */
+    letter-spacing: 2px; /* More prominent letter spacing */
+    color: #e94560; /* Vibrant accent color for title */
+    text-shadow: 0 0 10px rgba(233, 69, 96, 0.3); /* Soft glow */
+    font-weight: 800; /* Bolder font */
+}
+
+header p {
+    font-size: 1.2em;
+    color: #a0a0a0;
+    margin-top: 0.5em;
+}
+
+/* Main Content Area */
+main {
+    max-width: 1400px; /* Wider content area */
+    margin: 3em auto; /* More vertical margin */
+    padding: 0 2em; /* Increased horizontal padding */
+}
+
+/* Search and Filter Inputs */
+.filter-controls {
+    display: flex;
+    flex-direction: column; /* Stack on small screens */
+    gap: 1.5em; /* Space between elements */
+    margin-bottom: 2.5em; /* More space before game list */
+    max-width: 800px; /* Constrain width for inputs */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#searchInput,
+#categoryFilter {
+    width: 100%; /* Full width within container */
+    padding: 0.8em 1.2em; /* More padding */
+    border-radius: 8px; /* Softer rounded corners */
+    border: 1px solid #3e445b; /* Darker, subtle border */
+    background: #282c44; /* Slightly lighter input background */
+    color: #e0e0e0;
+    font-size: 1.1em; /* Slightly larger font */
+    outline: none; /* Remove default outline */
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#searchInput::placeholder,
+#categoryFilter option {
+    color: #a0a0a0; /* Placeholder color */
+}
+
+#searchInput:focus,
+#categoryFilter:focus {
+    border-color: #e94560; /* Accent color on focus */
+    box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.3); /* Soft focus glow */
+}
+
+/* Game List Grid */
+#gameGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); /* Slightly smaller min-width for more columns on large screens */
+    gap: 2em; /* Consistent gap */
+    margin-top: 2em;
+}
+
+/* Game Card Styling */
+.game-card {
+    background: #16213e; /* Darker card background */
+    border-radius: 16px; /* More rounded corners */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /* Stronger, softer shadow */
+    padding: 1.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; /* Smoother transitions */
+    border: 1px solid #0f3460; /* Subtle border */
+    overflow: hidden; /* Ensure content stays within rounded corners */
+}
+
+.game-card:hover {
+    transform: translateY(-8px) scale(1.03); /* More pronounced lift and scale */
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45); /* Even stronger shadow on hover */
+    border-color: #e94560; /* Accent border on hover */
+}
+
+/* Game Icon */
+.game-icon {
+    width: 120px; /* Larger icon */
+    height: 120px; /* Larger icon */
+    object-fit: cover;
+    border-radius: 16px; /* Matches card border-radius */
+    margin-bottom: 1.2em; /* More space below icon */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Soft shadow for icon */
+    background: #f3f3f3; /* Placeholder background for missing images */
+    border: 3px solid #0f3460; /* A subtle border around the icon */
+}
+
+/* Game Card Title */
+.game-card h2 {
+    margin: 0;
+    font-size: 1.5em; /* Larger title in card */
+    color: #e94560; /* Accent color for card titles */
+    text-align: center;
+    font-weight: 700; /* Bolder */
+    line-height: 1.3;
+    margin-bottom: 0.5em;
+}
+
+/* Game Card Description */
+.game-card p {
+    margin: 0;
+    text-align: center;
+    font-size: 0.95em; /* Slightly smaller for short description */
+    color: #a0a0a0; /* Softer text color */
+    flex-grow: 1; /* Allows description to take available space */
+    margin-bottom: 1.2em; /* Space before button */
+}
+
+/* Game Card Button */
+.game-card a {
+    display: inline-block; /* Ensure padding and width work */
+    background: #e94560; /* Accent color for button */
+    color: #ffffff; /* White text for button */
+    text-decoration: none;
+    padding: 0.8em 1.8em; /* More padding */
+    border-radius: 8px; /* Rounded button */
+    font-weight: bold;
+    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    font-size: 1em;
+    text-transform: uppercase; /* Uppercase text for button */
+    letter-spacing: 0.5px;
+}
+
+.game-card a:hover {
+    background: #c23b53; /* Slightly darker on hover */
+    transform: translateY(-2px); /* Slight lift on hover */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Category Sections (for horizontal scrolling, if implemented in HTML) */
+.category-section {
+    margin-bottom: 3em;
+}
+
+.category-section h2 {
+    font-size: 2.5em; /* Larger category title */
+    color: #e94560;
+    margin-bottom: 1em;
+    font-weight: 700;
+    text-align: center;
+}
+
+.category-games-row {
+    display: flex;
+    overflow-x: auto; /* Enable horizontal scrolling */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    padding-bottom: 1em; /* Space for scrollbar */
+    gap: 1.5em; /* Space between cards in the row */
+}
+
+/* Hide scrollbar for aesthetic, but keep functionality */
+.category-games-row::-webkit-scrollbar {
+    height: 8px;
+}
+
+.category-games-row::-webkit-scrollbar-track {
+    background: #282c44;
+    border-radius: 10px;
+}
+
+.category-games-row::-webkit-scrollbar-thumb {
+    background: #5a5f73;
+    border-radius: 10px;
+}
+
+.category-games-row::-webkit-scrollbar-thumb:hover {
+    background: #7a7f93;
+}
+
+/* Ensure game cards in horizontal rows are not too wide */
+.category-games-row .game-card {
+    flex-shrink: 0; /* Prevent cards from shrinking */
+    width: 280px; /* Fixed width for horizontal cards */
+}
+
+/* Responsive Adjustments */
+@media (min-width: 768px) {
+    .filter-controls {
+        flex-direction: row; /* Inputs side-by-side on larger screens */
+    }
+}
+
+@media (max-width: 767px) {
+    main {
+        padding: 0 1em; /* Reduce padding on smaller screens */
+        margin: 1.5em auto;
+    }
+
+    header h1 {
+        font-size: 2.2em; /* Adjust header title for mobile */
+    }
+
+    .game-card {
+        padding: 1em; /* Reduce card padding */
+    }
+
+    .game-icon {
+        width: 100px; /* Slightly smaller icon on mobile */
+        height: 100px;
+    }
+
+    .game-card h2 {
+        font-size: 1.3em; /* Adjust card title for mobile */
+    }
+
+    .game-card p {
+        font-size: 0.9em; /* Adjust description font size */
+    }
+
+    .game-card a {
+        padding: 0.7em 1.5em; /* Adjust button padding */
+        font-size: 0.9em;
+    }
+
+    .category-section h2 {
+        font-size: 2em;
+    }
+}
+
+@media (max-width: 480px) {
+    main {
+        padding: 0 0.5em; /* Even less padding on very small screens */
+    }
+    header {
+        padding: 1.5em 0.5em;
+    }
+    header h1 {
+        font-size: 1.8em;
+    }
+}

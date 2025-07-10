@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Detail</title>
+    <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+    <header>
+        <a href="dashboard.html">&larr; Back to Dashboard</a>
+        <h1 id="game-title">Game Title</h1>
+    </header>
+    <main>
+        <img id="game-icon" src="" alt="Game Icon" class="game-icon-large">
+        <p id="game-category"></p>
+        <p id="game-full-description"></p>
+        <div id="screenshots"></div>
+        <div id="video"></div>
+        <a id="play-link" href="#" target="_blank">Play Now</a>
+    </main>
+    <script>
+    // Get game ID from URL
+    const params = new URLSearchParams(window.location.search);
+    const gameId = params.get('id');
+    fetch('data/games.json')
+      .then(response => response.json())
+      .then(games => {
+        const game = games.find(g => g.id == gameId);
+        if (!game) return;
+        document.getElementById('game-title').textContent = game.title;
+        document.getElementById('game-icon').src = game.icon;
+        document.getElementById('game-category').textContent = `Category: ${game.category}`;
+        document.getElementById('game-full-description').textContent = game.fullDescription;
+        document.getElementById('screenshots').innerHTML = (game.screenshots || []).map(s => `<img src="${s}" class="screenshot">`).join('');
+        if (game.videoEmbedUrl) {
+          document.getElementById('video').innerHTML = `<iframe src="${game.videoEmbedUrl}" frameborder="0" allowfullscreen></iframe>`;
+        }
+        document.getElementById('play-link').href = game.playUrl;
+      });
+    </script>
+</body>
+</html>
