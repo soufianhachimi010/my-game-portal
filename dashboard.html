@@ -1,74 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Portal Dashboard</title>
-    <link rel="stylesheet" href="assets/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Portal - Dashboard</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <!-- Assume icon font is loaded globally -->
+  <!-- Google Fonts: Rajdhani for headings, Inter for body -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Rajdhani:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <h1>🎮 My Game Portal</h1>
-    </header>
-    <main>
-        <input type="text" id="search" placeholder="Search games..." style="margin: 1em; padding: 0.5em; width: 60%; max-width: 400px;">
-        <select id="category-filter" style="margin: 1em; padding: 0.5em;">
-            <option value="">All Categories</option>
-        </select>
-        <section id="game-list">
-            <!-- Games will be loaded here -->
-        </section>
-    </main>
-    <script>
-    let allGames = [];
-    const list = document.getElementById('game-list');
-    const search = document.getElementById('search');
-    const categoryFilter = document.getElementById('category-filter');
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="dashboard.html" class="site-logo">
+        <img src="assets/your-logo.svg" alt="Game Portal Logo">
+        <span class="site-title-text">Game Portal</span>
+      </a>
+      <form class="search-bar" onsubmit="event.preventDefault(); filterGames();">
+        <input type="text" id="searchInput" placeholder="Search for games, genres, or tags...">
+        <button type="submit" title="Search"><i class="icon-search"></i></button>
+      </form>
+      <nav class="main-nav">
+        <a href="dashboard.html" class="nav-link active"><i class="icon-home"></i> Home</a>
+        <a href="#" class="nav-link"><i class="icon-star"></i> New Games</a>
+        <a href="#" class="nav-link"><i class="icon-fire"></i> Popular</a>
+        <a href="#" class="nav-link"><i class="icon-grid"></i> Categories</a>
+      </nav>
+    </div>
+  </header>
 
-    fetch('data/games.json')
-      .then(response => response.json())
-      .then(games => {
-        allGames = games;
-        // Populate category filter
-        const categories = Array.from(new Set(games.map(g => g.category)));
-        categories.forEach(cat => {
-          const opt = document.createElement('option');
-          opt.value = cat;
-          opt.textContent = cat;
-          categoryFilter.appendChild(opt);
-        });
-        renderGames();
-      });
-
-    // Always show all games on initial load, regardless of search/category
-    function renderGames() {
-      let filtered = allGames;
-      const searchTerm = search.value.toLowerCase();
-      const selectedCategory = categoryFilter.value;
-      if (searchTerm || selectedCategory) {
-        filtered = allGames.filter(game => {
-          const matchesSearch =
-            game.title.toLowerCase().includes(searchTerm) ||
-            game.shortDescription.toLowerCase().includes(searchTerm) ||
-            game.fullDescription.toLowerCase().includes(searchTerm);
-          const matchesCategory = !selectedCategory || game.category === selectedCategory;
-          return matchesSearch && matchesCategory;
-        });
-      }
-      list.innerHTML = filtered.map(game => `
-        <div class="game-card">
-          <img src="${game.icon}" alt="${game.title} icon" class="game-icon">
-          <h2>${game.title}</h2>
-          <p>${game.shortDescription}</p>
-          <p><strong>Category:</strong> ${game.category}</p>
-          <p><strong>Plays:</strong> ${game.plays ?? '-'} | <strong>Rating:</strong> ${game.rating ?? '-'}</p>
-          <a href="game_detail.html?id=${game.id}">View Details & Play</a>
+  <main>
+    <!-- Hero / Featured Games Section -->
+    <section class="hero-section">
+      <h2 class="section-title">Featured Games</h2>
+      <div class="featured-games-grid" id="featuredGames">
+        <!-- Populated by JS -->
+        <!-- Example structure:
+        <div class="game-card featured large">
+          <div class="game-ribbon new">NEW</div>
+          <img class="game-cover" src="assets/featured-game-1.jpg" alt="Featured Game">
+          <div class="game-info">
+            <h3 class="game-title">Featured Game Title</h3>
+            <p class="game-desc">Short description for the featured game.</p>
+            <a href="#" class="play-button">Play Now</a>
+          </div>
         </div>
-      `).join('');
+        -->
+      </div>
+    </section>
+
+    <!-- Category Sections (Horizontal Carousels) -->
+    <section class="category-section" id="casualSection">
+      <div class="category-header">
+        <h2 class="section-title">Casual Games</h2>
+        <a href="dashboard.html?category=Casual" class="view-more">See all Casual Games <i class="icon-right-arrow"></i></a>
+      </div>
+      <div class="category-games-row" id="casualGamesRow">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <section class="category-section" id="drivingSection">
+      <div class="category-header">
+        <h2 class="section-title">Driving Games</h2>
+        <a href="dashboard.html?category=Driving" class="view-more">See all Driving Games <i class="icon-right-arrow"></i></a>
+      </div>
+      <div class="category-games-row" id="drivingGamesRow">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <!-- All Games Grid -->
+    <section class="all-games-grid-section">
+      <h2 class="section-title">All Games</h2>
+      <div id="gameGrid" class="all-games-grid">
+        <!-- Populated by JS -->
+      </div>
+      <div id="pagination" class="pagination">
+        <!-- Pagination controls (populated by JS) -->
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="#">About Us</a>
+      <a href="#">Contact</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+    </div>
+    <div class="footer-copy">
+      &copy; 2025 Game Portal. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    // Placeholder JS for dynamic population
+    async function fetchGames() {
+      const res = await fetch('data/games.json');
+      const games = await res.json();
+      // Example: games = [{id, title, category, icon, cover, shortDescription, isNew, isHot, ...}, ...]
+      populateFeaturedGames(games);
+      populateCategoryRow(games, 'Casual', 'casualGamesRow');
+      populateCategoryRow(games, 'Driving', 'drivingGamesRow');
+      displayGames(games);
     }
 
-    search.addEventListener('input', renderGames);
-    categoryFilter.addEventListener('change', renderGames);
-    </script>
+    function populateFeaturedGames(games) {
+      const featured = games.slice(0, 3); // Example: first 3 as featured
+      const grid = document.getElementById('featuredGames');
+      grid.innerHTML = '';
+      featured.forEach((game, i) => {
+        const card = document.createElement('div');
+        card.className = 'game-card featured' + (i === 0 ? ' large' : '');
+        if (game.isNew) card.innerHTML += '<div class="game-ribbon new">NEW</div>';
+        if (game.isHot) card.innerHTML += '<div class="game-ribbon hot">HOT</div>';
+        card.innerHTML += `
+          <img class="game-cover" src="${game.cover || 'assets/featured-game-' + (i+1) + '.jpg'}" alt="${game.title}">
+          <div class="game-info">
+            <h3 class="game-title">${game.title}</h3>
+            <p class="game-desc">${game.shortDescription}</p>
+            <a href="game_detail.html?id=${game.id}" class="play-button">Play Now</a>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function populateCategoryRow(games, category, rowId) {
+      const row = document.getElementById(rowId);
+      row.innerHTML = '';
+      games.filter(g => g.category === category).slice(0, 10).forEach(game => {
+        const card = document.createElement('div');
+        card.className = 'game-card horizontal';
+        if (game.isNew) card.innerHTML += '<div class="game-ribbon new">NEW</div>';
+        if (game.isHot) card.innerHTML += '<div class="game-ribbon hot">HOT</div>';
+        card.innerHTML += `
+          <img class="game-icon" src="${game.icon || 'assets/placeholder-icon.jpg'}" alt="${game.title}">
+          <div class="game-info">
+            <h4 class="game-name">${game.title}</h4>
+            <a href="game_detail.html?id=${game.id}" class="play-button-small">Play</a>
+          </div>
+        `;
+        row.appendChild(card);
+      });
+    }
+
+    function displayGames(games) {
+      const grid = document.getElementById('gameGrid');
+      grid.innerHTML = '';
+      games.slice(0, 24).forEach(game => {
+        const card = document.createElement('div');
+        card.className = 'game-card';
+        if (game.isNew) card.innerHTML += '<div class="game-ribbon new">NEW</div>';
+        if (game.isHot) card.innerHTML += '<div class="game-ribbon hot">HOT</div>';
+        card.innerHTML += `
+          <img class="game-icon" src="${game.icon || 'assets/placeholder-icon.jpg'}" alt="${game.title}">
+          <div class="game-info">
+            <h4 class="game-name">${game.title}</h4>
+            <a href="game_detail.html?id=${game.id}" class="play-button-small">Play Game</a>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function filterGames() {
+      // Implement search and filtering logic here
+      // For demonstration, just refetch all
+      fetchGames();
+    }
+
+    // Initial load
+    fetchGames();
+  </script>
 </body>
 </html>
